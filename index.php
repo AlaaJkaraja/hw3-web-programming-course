@@ -16,7 +16,7 @@
 
 </html>
 <?php
-$isUploaded = false;
+$uploaded = false;
 if (isset($_POST["submit"])) {
     $filesCount = count($_FILES["file"]["name"]);
     for ($i = 0; $i < $filesCount; $i++) {
@@ -26,20 +26,20 @@ if (isset($_POST["submit"])) {
         $file_type = $_FILES["file"]['type'][$i];
 
         $allowed_extensions = array('pdf', 'docx', 'png', 'gpeg');
-        $file_name_splitted = explode('.', $file_name);
-        $file_ex = end($file_name_splitted);
+        $splitted_name = explode('.', $file_name);
+        $file_ex = end($splitted_name);
 
         if (in_array($file_ex, $allowed_extensions)) {
             $file_ex = strtolower($file_ex);
             $newFileName = rand(100000, 900000) . '.' . $file_ex;
             $target = "folderToUpload/" . $newFileName;
             $upload = move_uploaded_file($file_tem, $target);
-            $isUploaded = true;
+            $uploaded = true;
         } else {
             die("Blocked File Extention");
         }
     }
-    if ($isUploaded) {
+    if ($uploaded) {
         die("Upload successfully");
     } else {
         die("Upload unsuccessfully");
