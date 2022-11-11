@@ -29,14 +29,14 @@ if (isset($_POST["submit"])) {
         $file_name_splitted = explode('.', $file_name);
         $file_ex = end($file_name_splitted);
 
-        if (!in_array($file_ex, $blocked_extensions)) {
+        if (in_array($file_ex, $allowed_extensions)) {
             $file_ex = strtolower($file_ex);
             $newFileName = rand(100000, 900000) . '.' . $file_ex;
             $target = "folderToUpload/" . $newFileName;
             $upload = move_uploaded_file($file_tem, $target);
             $isUploaded = true;
         } else {
-            die("Blocked File Type");
+            die("Blocked File Extention");
         }
     }
     if ($isUploaded) {
